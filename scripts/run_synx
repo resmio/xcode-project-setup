@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+if [ -z "$1" ]
+then
+    echo "Error: Need to provide project name as argument"
+    exit 1
+fi
+
+PROJECT_NAME=$1
+
+echo "Running synx..."
+bash -l -c "synx --prune --quiet $PROJECT_NAME.xcodeproj/"

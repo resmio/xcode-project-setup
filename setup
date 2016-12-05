@@ -1,0 +1,225 @@
+#!/bin/bash
+
+
+echo "# # # # #"
+
+# # # # # # # # # # # # #
+# Save given projectname
+if [[ ! -e ".projectname" ]];
+then 
+    if [[ "$#" -ne 1 ]]; 
+    then
+        echo "Illegal number of parameters. Provide only the name of your Xcode-project-file (without extension)."
+        exit 1
+    else
+        {
+            echo "$1"
+        } > ".projectname"
+    fi
+elif [[ "$#" -eq 1 ]];
+then
+    read -r -p "Do you want to update the saved project-name to '$1'? [y/N] " RESPONSE
+    case $RESPONSE in
+        [yY][eE][sS]|[yY]) 
+            {
+                echo "$1"
+            } > ".projectname"
+            ;;
+    esac
+    echo "# # #"
+fi
+#
+# # # # # # # # # # # #
+
+
+# # # # # # # # # # # # # # # # # # # # #
+# Load projectname from .projectname file
+PROJECTNAME=$(head -n 1 .projectname)
+#
+# # # # # # # # # # # # # # # # # # # # #
+
+
+# # # # # # # # # # # #
+# Initializing git repo
+git init
+#
+# # # # # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # # # # # # # # # # # # # #
+# Write projectname to .ruby-gemset file
+echo "$PROJECTNAME" > ".ruby-gemset"
+#
+# # # # # # # # # # # # # # # # # # # # #
+
+
+# # # # # # # # # # # # # # # # # # #
+# Check for rvm, install if necessary
+# TODO: Also check for root-installation of rvm!!!
+if [[ -e "$HOME/.rvm/scripts/rvm" ]];
+then
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+fi
+echo "Checking for rvm installation..."
+RVM_TYPE_OUTPUT=$( (type rvm | head -1) 2>&1 )
+
+if [[ $RVM_TYPE_OUTPUT = "rvm is a function" ]];
+then
+    echo "rvm is already installed."
+else 
+    echo "rvm is not installed. Installing stable..."
+    \curl -sSL https://get.rvm.io | bash -s stable
+fi
+export PATH="$PATH:$HOME/.rvm/bin"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+#
+# # # # # # # # # # # # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Install ruby as specified in .ruby-version and .ruby-gemset
+echo "Checking for rvm ruby installation..."
+REQUIRED_RUBY_VERSION="$(head -n 1 ".ruby-version")"
+INSTALLED_RUBY_VERSION=$RUBY_VERSION
+
+echo "Required: $REQUIRED_RUBY_VERSION"
+echo "Installed: $INSTALLED_RUBY_VERSION"
+
+if [[ $NO_SUCH_FILE_OR_DIRECTORY = "No such file or directory" ]];
+then
+    echo "ruby is not installed."
+    echo "Installing $REQUIRED_RUBY_VERSION using rvm..."
+    rvm install $REQUIRED_RUBY_VERSION
+elif [[ $INSTALLED_RUBY_VERSION != $REQUIRED_RUBY_VERSION ]];
+then
+    echo "Installed ruby version is not $REQUIRED_RUBY_VERSION."
+    echo "Installing $REQUIRED_RUBY_VERSION using rvm..."
+    rvm install $REQUIRED_RUBY_VERSION
+else
+    echo "$REQUIRED_RUBY_VERSION is already installed."
+fi
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # # # # # # # # # #
+# Tell rvm to use specified ruby
+RUBYGEMSET="$(head -n 1 ".ruby-version")@$(head -n 1 ".ruby-gemset")"
+echo "Telling rvm to use $RUBYGEMSET for this project..."
+rvm use "$RUBYGEMSET" --create
+source "$HOME/.rvm/scripts/rvm"
+#
+# # # # # # # # # # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # #
+# Install bundler
+echo "Checking for bundler installation..."
+GEM_SPEC_BUNDLER_OUTPUT=$( (gem spec bundler) 2>&1 )
+GEM_NOT_FOUND=${GEM_SPEC_BUNDLER_OUTPUT::5}
+if [[ $GEM_NOT_FOUND = "ERROR" ]];
+then
+    echo "bundler is not installed."
+    echo "Installing bundler..."
+    gem install bundler
+else
+    echo "bundler is already installed."
+fi
+#
+# # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # # # #
+# Run bundle install
+echo "Installing Gems..."
+bundle install
+#
+# # # # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # #
+# Run pod install
+echo "Initializing and installing Pods..."
+pod init
+pod install
+#
+# # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # # #
+# Install git hooks
+mkdir -p ".git/hooks/"
+echo "Installing git hooks..."
+
+echo "Installing pre-push hook..."
+{
+    echo "#!/bin/bash"
+    echo ""
+    echo "./scripts/pre-push"
+} > ".git/hooks/pre-push"
+
+chmod +x ".git/hooks/pre-push"
+
+echo "Installing post-merge hook..."
+{
+    echo "#!/bin/bash"
+    echo ""
+    echo "./scripts/post-merge"
+} > ".git/hooks/post-merge"
+
+chmod +x ".git/hooks/post-merge"
+#
+# # # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # # # #
+# Maybe committing changes
+read -r -p "Do you want to commit the changes induced by setup? [y/N] " RESPONSE
+case $RESPONSE in
+    [yY][eE][sS]|[yY]) 
+        git add .
+        git commit -m "[setup-script] Run setup"
+        ;;
+esac
+#
+# # # # # # # # # # #
+
+
+echo "# # #"
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Open Xcode workspace which was created by pod install
+echo "Opening workspace..."
+open "./$PROJECTNAME.xcworkspace"
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+echo "Done. Have fun!"
+echo "# # # # #"
+
