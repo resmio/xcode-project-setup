@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# # # # # # # # # # # # # # # # # # # # #
+# Load projectname from .projectname file
+PROJECTNAME=$(head -n 1 .projectname)
+#
+# # # # # # # # # # # # # # # # # # # # #
+
+
+STASH_MESSAGE="<post-merge-hook> Temporary stash, do not pop or delete"
+
+function stash_all_changes
+{
+    echo "Saving all local changes in a temporary stash..."
+    git add .
+    git stash save -u $STASH_MESSAGE
+}
+
+function commit_changes_from_hook
+{
+    echo "Committing new changes..."
+    git add .
+    git commit --no-verify -m "[post-merge-hook] run synx, run xUnique"
+}
+
+function pop_stash
+{
+    if [ ! -z "$(git stash list)" ]
+    then
+        STASH_REF="$(git log -g stash --grep="$STASH_MESSAGE" --pretty=format:"%gd")"
+        if [ ! -z "$STASH_REF" ]
+        then 
+            echo "# # #"
+            echo "Popping temporary stash..."
+            git stash pop "$STASH_REF"
+        fi
+    fi
+}
+
+
+function main
+{
+    echo "# # # # #"
+    stash_all_changes
+    echo "# # #"
+    ./scripts/run_synx $PROJECTNAME
+    echo "# # #"
+    ./scripts/run_xUnique $PROJECTNAME
+    echo "# # #"
+    commit_changes_from_hook
+    pop_stash
+    echo "# # # # #"
+}
+
+main

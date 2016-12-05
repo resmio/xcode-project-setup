@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+# # # # # # # # # # # # # # # # # # # # #
+# Load projectname from .projectname file
+PROJECTNAME=$(head -n 1 .projectname)
+#
+# # # # # # # # # # # # # # # # # # # # #
+
+# # # # # #
+# Run synx
+./scripts/run_synx "$PROJECTNAME"
+#
+# # # # # #
+
+# # # # # # #
+# Run xUnique
+./scripts/run_xUnique "$PROJECTNAME"
+#
+# # # # # # #
+
