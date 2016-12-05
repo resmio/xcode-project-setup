@@ -5,7 +5,7 @@ Normally, you would use them like this:
 
 1. Create an Xcode-project
 2. Download this repo as a zip
-3. Unzip it into the base-folder of your Xcode-project  
+3. Move the contents of the xcode-project-setup folder into the base-folder of your Xcode-project  
 4. If you already initialized a git repo in that folder, commit or stash your changes
 5. Run `./setup <basename-of-your-xcode-project>`  
 This will do the following things:
