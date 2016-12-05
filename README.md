@@ -31,3 +31,28 @@ to work around a bug in the version installed alongside cocoapods)*
 
 Running `./setup` multiple times should not break anything but it's not recommended because it takes some time.  
 After you ran it one time, it should suffice to run `pod install` when you changed the requirements in the Podfile.  
+
+
+### What do the git hooks do?
+
+The `pre-push` and the `post-merge` hook essentially do the same. They run:  
+- [`synx`](https://github.com/venmo/synx), a gem which synchronises the actual folder-structure of your xcode-project source-folder with the group-structure of your projectfile.
+- [`xUnique`](https://github.com/truebit/xUnique), a python script which rewrites the uuids in the projectfile to be deterministic, and sorts the file and group entries in the projectfile alphabetically to make resolving merge-conflicts in the projectfile way easier.
+
+When a hook is run: 
+1. All uncommitted changes are stashed
+2. `synx` and `xUnique` are run
+3. All changes made by `synx` and `xUnique` are committed
+
+The pre-push hook exits non-zero if changes were made and committed by it, so you have to `git push` again.
+This is best practice because the hook made and committed changes which you should be able to review before pushing.
+
+You can also run the scripts manually by running `./run_synx_and_xUnique`.  
+This is necessary whenever you added/moved/removed files/groups/run-scripts or similar in your xcode-project.
+
+### What else is included?
+
+Apart from the setup-script and the git-hooks, this repo includes:  
+- a default Xcode .gitignore (the version which **ignores** the Pods folder)
+- a .gitattributes file which states a `union` merge policy for the projectfile
+
