@@ -1,5 +1,5 @@
 # xcode-project-setup
-These are some nifty scripts to setup a new Xcode project with rvm, ruby, Cocoapods and useful git hooks.
+These are some nifty scripts to setup an Xcode project with rvm, ruby, Cocoapods and some useful git hooks.
 
 Normally, you would use them like this:
 
