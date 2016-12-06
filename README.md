@@ -3,7 +3,7 @@ These are some nifty scripts to setup an Xcode project with rvm, ruby, Cocoapods
 
 Normally, you would use them like this:
 
-1. Create an Xcode-project
+1. Create an Xcode-project (if you don't already have one)
 2. Download this repo as a zip
 3. Move the contents of the xcode-project-setup folder into the base-folder of your Xcode-project  
 4. If you already initialized a git repo in that folder, commit or stash your changes
