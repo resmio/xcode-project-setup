@@ -14,9 +14,8 @@ This will do the following things:
 not recommend because it spawns millions of strange Xcode-errors), you should run `./setup <basename-of-your-xcode-project>` 
 again with the new name of your project, it will ask you if you want to change the projectname.)*
   - It checks if rvm is installed, if not, it installs the latest stable version
-  - It checks if rvm uses the ruby version given in .ruby-version, if not, it tells rvm to use that version
-*(Therefore, if you want to use a different version, adapt the version  
-in .ruby-version to your requirements before running `./setup`)*
+  - It checks if rvm uses the ruby version given in .ruby-version, if not, it tells rvm to use that version  
+*(Therefore, if you want to use a different version, adapt the version in .ruby-version to your requirements before running `./setup`)*
   - It runs `gem install bundler`, which installs bundler (d'uh...)
   - It runs `bundle install`, which will install Cocoapods and synx (synx is used in the git hooks)  
 *(At the moment, it also installs a specific version of the xcodeproject gem,  
