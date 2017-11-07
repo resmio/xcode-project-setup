@@ -212,14 +212,6 @@ esac
 echo "# # #"
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Open Xcode workspace which was created by pod install
-echo "Opening workspace..."
-open "./$PROJECTNAME.xcworkspace"
-#
-# # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-
 echo "Done. Have fun!"
 echo "# # # # #"
 
