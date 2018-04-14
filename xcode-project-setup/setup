@@ -58,23 +58,16 @@ echo "$PROJECTNAME" > ".ruby-gemset"
 
 # # # # # # # # # # # # # # # # # # #
 # Check for rvm, install if necessary
-# TODO: Also check for root-installation of rvm!!!
-if [[ -e "$HOME/.rvm/scripts/rvm" ]];
-then
-    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-fi
 echo "Checking for rvm installation..."
 RVM_TYPE_OUTPUT=$( (type rvm | head -1) 2>&1 )
 
 if [[ $RVM_TYPE_OUTPUT = "rvm is a function" ]];
 then
-    echo "rvm is already installed."
+    echo "rvm is installed"
 else 
-    echo "rvm is not installed. Installing stable..."
-    \curl -sSL https://get.rvm.io | bash -s stable
+    echo "rvm is not installed. Please install rvm before using this script. For instructions on installing rvm, visit https://rvm.io/rvm/install"
+    exit 1
 fi
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 #
 # # # # # # # # # # # # # # # # # # #
 
