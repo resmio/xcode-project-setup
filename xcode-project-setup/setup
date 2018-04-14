@@ -76,40 +76,8 @@ echo "# # #"
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Install ruby as specified in .ruby-version and .ruby-gemset
-echo "Checking for rvm ruby installation..."
-REQUIRED_RUBY_VERSION="$(head -n 1 ".ruby-version")"
-INSTALLED_RUBY_VERSION=$RUBY_VERSION
-
-echo "Required: $REQUIRED_RUBY_VERSION"
-echo "Installed: $INSTALLED_RUBY_VERSION"
-
-if [[ $NO_SUCH_FILE_OR_DIRECTORY = "No such file or directory" ]];
-then
-    echo "ruby is not installed."
-    echo "Installing $REQUIRED_RUBY_VERSION using rvm..."
-    rvm install $REQUIRED_RUBY_VERSION
-elif [[ $INSTALLED_RUBY_VERSION != $REQUIRED_RUBY_VERSION ]];
-then
-    echo "Installed ruby version is not $REQUIRED_RUBY_VERSION."
-    echo "Installing $REQUIRED_RUBY_VERSION using rvm..."
-    rvm install $REQUIRED_RUBY_VERSION
-else
-    echo "$REQUIRED_RUBY_VERSION is already installed."
-fi
-#
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-
-echo "# # #"
-
-
-# # # # # # # # # # # # # # # # #
-# Tell rvm to use specified ruby
-RUBYGEMSET="$(head -n 1 ".ruby-version")@$(head -n 1 ".ruby-gemset")"
-echo "Telling rvm to use $RUBYGEMSET for this project..."
-rvm use "$RUBYGEMSET" --create
-source "$HOME/.rvm/scripts/rvm"
+# Use/Install ruby as specified in .ruby-version and .ruby-gemset
+rvm use "$(cat '.ruby-version')@$(cat '.ruby-gemset')" --create --install
 #
 # # # # # # # # # # # # # # # # #
 
