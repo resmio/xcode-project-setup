@@ -938,8 +938,6 @@ chmod +x "scripts/run_xUnique"
 cat <<\EOF > "scripts/pre-push"
 #!/bin/bash
 
-set -e
-
 
 # # # # # # # # # # # # # # # # # # # # #
 # Load projectname from .projectname file
@@ -1016,8 +1014,6 @@ chmod +x "scripts/pre-push"
 # Create post-merge script
 cat <<\EOF > "scripts/post-merge"
 #!/bin/bash
-
-set -e
 
 
 # # # # # # # # # # # # # # # # # # # # #
@@ -1135,8 +1131,6 @@ echo "Installing pre-push hook..."
 cat <<\EOF > ".git/hooks/pre-push"
 #!/bin/bash
 
-set -e
-
 ./scripts/pre-push
 EOF
 chmod +x ".git/hooks/pre-push"
@@ -1144,8 +1138,6 @@ chmod +x ".git/hooks/pre-push"
 echo "Installing post-merge hook..."
 cat <<\EOF > ".git/hooks/post-merge"
 #!/bin/bash
-
-set -e
 
 ./scripts/post-merge
 EOF
