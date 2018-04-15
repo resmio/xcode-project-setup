@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash
 
 set -e
 
@@ -50,6 +50,8 @@ PROJECTNAME=$(head -n 1 .projectname)
 # # # # # # # # # # # # # # # # # # #
 # Check for rvm, abort if not installed
 echo "Checking for rvm installation..."
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -s "/usr/local/rvm/scripts/rvm" ]] && source "/usr/local/rvm/scripts/rvm"
 RVM_TYPE_OUTPUT=$( (type rvm | head -1) 2>&1 )
 
 if [[ $RVM_TYPE_OUTPUT = "rvm is a function" ]];
