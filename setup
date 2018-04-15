@@ -285,6 +285,7 @@ PROJECTNAME=$(head -n 1 .projectname)
 #
 # # # # # # #
 EOF
+chmod +x "run_synx_and_xUnique"
 #
 # # # # # # # # # # # # # # # # # # # # #
 
@@ -875,6 +876,7 @@ def main():
 if __name__ == '__main__':
     main()
 EOF
+chmod +x "scripts/xUnique.py"
 #
 # # # # # # # # # # # # # # # # # # # # #
 
@@ -896,6 +898,7 @@ PROJECT_NAME=$1
 echo "Running synx..."
 bash -l -c "synx --prune --quiet $PROJECT_NAME.xcodeproj/"
 EOF
+chmod +x "scripts/run_synx"
 #
 # # # # # # # # # # # # # # # # # # # # #
 
@@ -917,6 +920,7 @@ PROJECT_NAME=$1
 echo "Running xUnique..."
 bash -l -c "python ./scripts/xUnique.py $PROJECT_NAME.xcodeproj/ > /dev/null"
 EOF
+chmod +x "scripts/run_xUnique"
 #
 # # # # # # # # # # # # # # # # # # # # #
 
@@ -993,6 +997,7 @@ function main
 
 main
 EOF
+chmod +x "scripts/pre-push"
 #
 # # # # # # # # # # # # # # # # # # # # #
 
@@ -1058,6 +1063,7 @@ function main
 main
 
 EOF
+chmod +x "scripts/post-merge"
 #
 # # # # # # # # # # # # # # # # # # # # #
 
@@ -1129,7 +1135,6 @@ echo "Installing pre-push hook..."
     echo ""
     echo "./scripts/pre-push"
 } > ".git/hooks/pre-push"
-
 chmod +x ".git/hooks/pre-push"
 
 echo "Installing post-merge hook..."
@@ -1138,7 +1143,6 @@ echo "Installing post-merge hook..."
     echo ""
     echo "./scripts/post-merge"
 } > ".git/hooks/post-merge"
-
 chmod +x ".git/hooks/post-merge"
 #
 # # # # # # # # # #
