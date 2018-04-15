@@ -1,5 +1,11 @@
 #!/bin/bash
 
+set -e
+
+__dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${__dir}"
+
+
 RUBY_VERSION='2.5.1'
 
 
