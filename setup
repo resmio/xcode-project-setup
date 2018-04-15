@@ -916,9 +916,6 @@ cat <<\EOF > "scripts/run_xUnique"
 
 set -e
 
-__dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "${__dir}"
-
 
 if [ -z "$1" ]
 then
