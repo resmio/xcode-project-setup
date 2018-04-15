@@ -1,5 +1,7 @@
 #!/bin/bash
 
+RUBY_VERSION='2.5.1'
+
 
 echo "# # # # #"
 
@@ -9,7 +11,7 @@ if [[ ! -e ".projectname" ]];
 then 
     if [[ "$#" -ne 1 ]]; 
     then
-        echo "Illegal number of parameters. Provide only the name of your Xcode-project-file (without extension)."
+        echo "Illegal number of parameters. Provide the name of your Xcode-project-file (without extension)."
         exit 1
     else
         {
@@ -52,6 +54,13 @@ echo "# # #"
 # # # # # # # # # # # # # # # # # # # # #
 # Write projectname to .ruby-gemset file
 echo "$PROJECTNAME" > ".ruby-gemset"
+#
+# # # # # # # # # # # # # # # # # # # # #
+
+
+# # # # # # # # # # # # # # # # # # # # #
+# Write RUBY_VERSION to .ruby-version file
+echo "$RUBY_VERSION" > ".ruby-version"
 #
 # # # # # # # # # # # # # # # # # # # # #
 
