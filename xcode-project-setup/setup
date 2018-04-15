@@ -283,6 +283,13 @@ EOF
 # # # # # # # # # # # # # # # # # # # # #
 
 
+# # # # # # # # # # # # # # # # # # # # #
+# Create scripts directory
+mkdir scripts
+#
+# # # # # # # # # # # # # # # # # # # # #
+
+
 echo "# # #"
 
 
