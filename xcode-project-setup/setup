@@ -41,6 +41,25 @@ PROJECTNAME=$(head -n 1 .projectname)
 # # # # # # # # # # # # # # # # # # # # #
 
 
+# # # # # # # # # # # # # # # # # # #
+# Check for rvm, abort if not installed
+echo "Checking for rvm installation..."
+RVM_TYPE_OUTPUT=$( (type rvm | head -1) 2>&1 )
+
+if [[ $RVM_TYPE_OUTPUT = "rvm is a function" ]];
+then
+    echo "rvm is installed"
+else 
+    echo "rvm is not installed. Please install rvm before using this script. For instructions on installing rvm, visit https://rvm.io/rvm/install"
+    exit 1
+fi
+#
+# # # # # # # # # # # # # # # # # # #
+
+
+echo "# # #"
+
+
 # # # # # # # # # # # #
 # Initialize git repo
 git init
@@ -221,25 +240,6 @@ echo "$PROJECTNAME" > ".ruby-gemset"
 echo "$RUBY_VERSION" > ".ruby-version"
 #
 # # # # # # # # # # # # # # # # # # # # #
-
-
-echo "# # #"
-
-
-# # # # # # # # # # # # # # # # # # #
-# Check for rvm, install if necessary
-echo "Checking for rvm installation..."
-RVM_TYPE_OUTPUT=$( (type rvm | head -1) 2>&1 )
-
-if [[ $RVM_TYPE_OUTPUT = "rvm is a function" ]];
-then
-    echo "rvm is installed"
-else 
-    echo "rvm is not installed. Please install rvm before using this script. For instructions on installing rvm, visit https://rvm.io/rvm/install"
-    exit 1
-fi
-#
-# # # # # # # # # # # # # # # # # # #
 
 
 echo "# # #"
