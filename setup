@@ -1090,8 +1090,17 @@ echo "# # #"
 
 # # # # # # # # #
 # Install bundler
-echo "Installing bundler..."
-gem install bundler
+echo "Checking for bundler installation..."
+GEM_SPEC_BUNDLER_OUTPUT=$( (gem spec bundler) 2>&1 )
+GEM_NOT_FOUND=${GEM_SPEC_BUNDLER_OUTPUT::5}
+if [[ $GEM_NOT_FOUND = "ERROR" ]];
+then
+    echo "bundler is not installed."
+    echo "Installing bundler..."
+    gem install bundler
+else
+    echo "bundler is already installed."
+fi
 #
 # # # # # # # # #
 
