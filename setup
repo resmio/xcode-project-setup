@@ -266,6 +266,11 @@ EOF
 cat <<EOF > "run_synx_and_xUnique"
 #!/bin/bash
 
+set -e
+
+__dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${__dir}"
+
 
 # # # # # # # # # # # # # # # # # # # # #
 # Load projectname from .projectname file
@@ -908,6 +913,11 @@ chmod +x "scripts/run_synx"
 cat <<EOF > "scripts/run_xUnique"
 #!/bin/bash
 
+set -e
+
+__dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${__dir}"
+
 
 if [ -z "$1" ]
 then
@@ -918,7 +928,7 @@ fi
 PROJECT_NAME=$1
 
 echo "Running xUnique..."
-bash -l -c "python ./scripts/xUnique.py $PROJECT_NAME.xcodeproj/ > /dev/null"
+bash -l -c "python xUnique.py $PROJECT_NAME.xcodeproj/ > /dev/null"
 EOF
 chmod +x "scripts/run_xUnique"
 #
@@ -929,6 +939,8 @@ chmod +x "scripts/run_xUnique"
 # Create pre-push script
 cat <<EOF > "scripts/pre-push"
 #!/bin/bash
+
+set -e
 
 
 # # # # # # # # # # # # # # # # # # # # #
@@ -1006,6 +1018,8 @@ chmod +x "scripts/pre-push"
 # Create post-merge script
 cat <<EOF > "scripts/post-merge"
 #!/bin/bash
+
+set -e
 
 
 # # # # # # # # # # # # # # # # # # # # #
@@ -1130,19 +1144,23 @@ mkdir -p ".git/hooks/"
 echo "Installing git hooks..."
 
 echo "Installing pre-push hook..."
-{
-    echo "#!/bin/bash"
-    echo ""
-    echo "./scripts/pre-push"
-} > ".git/hooks/pre-push"
+cat <<EOF > ".git/hooks/pre-push"
+#!/bin/bash
+
+set -e
+
+./scripts/pre-push
+EOF
 chmod +x ".git/hooks/pre-push"
 
 echo "Installing post-merge hook..."
-{
-    echo "#!/bin/bash"
-    echo ""
-    echo "./scripts/post-merge"
-} > ".git/hooks/post-merge"
+cat <<EOF > ".git/hooks/post-merge"
+#!/bin/bash
+
+set -e
+
+./scripts/post-merge
+EOF
 chmod +x ".git/hooks/post-merge"
 #
 # # # # # # # # # #
