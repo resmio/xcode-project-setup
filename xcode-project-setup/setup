@@ -42,8 +42,15 @@ PROJECTNAME=$(head -n 1 .projectname)
 
 
 # # # # # # # # # # # #
-# Initializing git repo
+# Initialize git repo
 git init
+#
+# # # # # # # # # # # #
+
+
+# # # # # # # # # # # #
+# Create .gitattributes file
+echo "*.pbxproj merge=union" > ".gitattributes"
 #
 # # # # # # # # # # # #
 
