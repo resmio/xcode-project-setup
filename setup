@@ -5,6 +5,9 @@ cd "${__dir}"
 
 
 RUBY_VERSION='2.5.1'
+COCOAPODS_VERSION='1.5.3'
+SYNX_VERSION='0.2.1'
+XCPRETTY_VERSION='0.3.0'
 
 
 echo "# # # # #"
@@ -254,9 +257,9 @@ echo "$RUBY_VERSION" > ".ruby-version"
 cat <<\EOF > "Gemfile"
 source 'https://rubygems.org'
 
-gem 'cocoapods', '1.5.0'
-gem 'synx', '0.2.1'
-gem 'xcpretty', '0.2.8'
+gem 'cocoapods', '${COCOAPODS_VERSION}'
+gem 'synx', '${SYNX_VERSION}'
+gem 'xcpretty', '${XCPRETTY_VERSION}'
 EOF
 #
 # # # # # # # # # # # # # # # # # # # # #
