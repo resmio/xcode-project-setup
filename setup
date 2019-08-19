@@ -86,7 +86,7 @@ echo "*.pbxproj merge=union" > ".gitattributes"
 
 # # # # # # # # # # # #
 # Create .gitignore file
-cat <<\EOF > ".gitignore"
+cat > ".gitignore" <<\EOF
 #########################
 # .gitignore file for Xcode4 / OS X Source projects
 #
@@ -254,7 +254,7 @@ echo "$RUBY_VERSION" > ".ruby-version"
 
 # # # # # # # # # # # # # # # # # # # # #
 # Create Gemfile
-cat <<\EOF > "Gemfile"
+cat > "Gemfile" <<EOF
 source 'https://rubygems.org'
 
 gem 'cocoapods', '${COCOAPODS_VERSION}'
@@ -267,7 +267,7 @@ EOF
 
 # # # # # # # # # # # # # # # # # # # # #
 # Create run_synx_and_xUnique file
-cat <<\EOF > "run_synx_and_xUnique"
+cat > "run_synx_and_xUnique" <<\EOF
 #!/bin/bash
 
 set -e
@@ -308,7 +308,7 @@ mkdir -p scripts
 
 # # # # # # # # # # # # # # # # # # # # #
 # Create xUnique.py
-cat <<\EOF > "scripts/xUnique.py"
+cat > "scripts/xUnique.py" <<\EOF
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
@@ -892,7 +892,7 @@ chmod +x "scripts/xUnique.py"
 
 # # # # # # # # # # # # # # # # # # # # #
 # Create run_synx script
-cat <<\EOF > "scripts/run_synx"
+cat > "scripts/run_synx" <<\EOF
 #!/bin/bash
 
 
@@ -914,7 +914,7 @@ chmod +x "scripts/run_synx"
 
 # # # # # # # # # # # # # # # # # # # # #
 # Create run_xUnique script
-cat <<\EOF > "scripts/run_xUnique"
+cat > "scripts/run_xUnique" <<\EOF
 #!/bin/bash
 
 set -e
@@ -938,7 +938,7 @@ chmod +x "scripts/run_xUnique"
 
 # # # # # # # # # # # # # # # # # # # # #
 # Create pre-push script
-cat <<\EOF > "scripts/pre-push"
+cat > "scripts/pre-push" <<\EOF
 #!/bin/bash
 
 
@@ -1015,7 +1015,7 @@ chmod +x "scripts/pre-push"
 
 # # # # # # # # # # # # # # # # # # # # #
 # Create post-merge script
-cat <<\EOF > "scripts/post-merge"
+cat > "scripts/post-merge" <<\EOF
 #!/bin/bash
 
 
@@ -1140,7 +1140,7 @@ mkdir -p ".git/hooks/"
 echo "Installing git hooks..."
 
 echo "Installing pre-push hook..."
-cat <<\EOF > ".git/hooks/pre-push"
+cat > ".git/hooks/pre-push" <<\EOF
 #!/bin/bash
 
 ./scripts/pre-push
@@ -1148,7 +1148,7 @@ EOF
 chmod +x ".git/hooks/pre-push"
 
 echo "Installing post-merge hook..."
-cat <<\EOF > ".git/hooks/post-merge"
+cat > ".git/hooks/post-merge" <<\EOF
 #!/bin/bash
 
 ./scripts/post-merge
